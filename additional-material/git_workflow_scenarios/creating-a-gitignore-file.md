@@ -45,29 +45,14 @@ This will create the file ~/.gitignore_global. Now you can edit that file the sa
 
 ## How to Untrack Files Previously Committed from New Gitignore
 
-To untrack a single file, ie stop tracking the file but not delete it from the system use:
+.gitignore will prevent untracked files from being added (without an add -f) to the set of files tracked by git, however git will continue to track any files that are already being tracked.
 
-```
-git rm --cached filename
-```
+To stop tracking a file you need to remove it from the index. This can be achieved with this command.
 
-To untrack every file in .gitignore:
+git rm --cached <file>
+If you want to remove a whole folder, you need to remove all files in it recursively.
 
-First, commit any outstanding code changes, and then run:
+git rm -r --cached <folder>
+The removal of the file from the head revision will happen on the next commit.
 
-```
-git rm -r --cached
-```
-
-This removes any changed files from the index(staging area), then run:
-
-```
-git add .
-```
-Commit it:
-
-```
-git commit -m ".gitignore is now working"
-```
-
-To undo ```git rm --cached filename```, use ```git add filename```
+WARNING: While this will not remove the physical file from your local, it will remove the files from other developers machines on next git pull.
